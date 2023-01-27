@@ -53,7 +53,7 @@ while i == 1:
                 print("\n\nItem not in stock")
         sale = ("sale", item, price, ammount)
         audit.append(sale)
-#DONE3-purchase: input product, price, ammount; check if prduct in stock, add if not
+#DONE3-buy: input product, price, ammount; check if prduct in stock, add if not
 #add product to stock, substrackt price from acc_val, check if acc_val is negative
 #add to audit, negative value check, substract costs from acc_val
     elif inp == "3":
@@ -94,7 +94,7 @@ while i == 1:
         for idx in range(len(stock)):
             if stock[idx][0] == inp:
                 print("Item:{}  ;  Price:{}$  ;  Ammount:{}".format(stock[idx][0], stock[idx][1], stock[idx][2]))
-            else:
+            elif stock[idx][0] == None:
                 print("Not in stock\n\n")
 #DONE7-audit: input from, to; print recorded actions with index from-to: add range
     elif inp == "7":
