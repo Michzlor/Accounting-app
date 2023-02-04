@@ -1,10 +1,23 @@
-acc_val = 1000
-stock = [["a", 5, 200], ["b", 4 ,300],[None]]
+stock = []
+item = True
+
+with open("balance.txt", "r") as f:
+    acc_val = float(f.readline())
+with open("stock_file.txt", "r") as f:
+    read = f.readlines()
+    for i in range(0, len(read), 3):
+        try:
+            item = [read[i].strip(), (read[i+1].strip()), (read[i+2].strip())]
+            print(item)
+            print("item")
+            stock.append(item)
+        except:
+            break
+stock.append([None])
 audit = []
-bop = len(stock)
 
-
-
+print(read)
+print(stock)
 
 
 
@@ -49,6 +62,7 @@ while i == 1:
                 else:
                     stock[idx][2] -= ammount
                     acc_val += price * ammount
+                    break
             elif stock[idx][0] == None or stock[idx][2] == 0:
                 print("\n\nItem not in stock")
         sale = ("sale", item, price, ammount)
@@ -63,15 +77,15 @@ while i == 1:
         if price <= 0 or ammount <= 0:
             print("\n\nInvalid value")
             continue
-        for idx in range(bop):
+        for idx in range(len(stock)):
             if acc_val - ammount*price < 0:
                 print("\n\nInsufficent funds")
                 break
-            if stock[idx][0] == None:
+            elif stock[idx][0] == None:
                 stock.insert(-1, [item, price, ammount])
                 acc_val -= price*ammount
                 break
-            if stock[idx][0] == item:
+            elif stock[idx][0] == item:
                 stock[idx][2] += ammount
                 acc_val -= price*ammount
                 break
@@ -86,6 +100,7 @@ while i == 1:
     elif inp == "5":
         #for k, v in stock.items():
            #print("{}: {}".format(k, v))
+        print(stock)
         for idx in range(len(stock)-1):
             print("Item:{}  ;  Price:{}$  ;  Ammount:{}".format(stock[idx][0], stock[idx][1], stock[idx][2]))
 #DONE6-list item: input product; print ammount for input
@@ -114,4 +129,20 @@ while i == 1:
 #DONE8-break
     elif inp == "8":
         print("\n\nHave a nice day\n\n")
+        with open("log.txt", "a") as log:
+            for i in range(len(audit)):
+                log.write("________\n")
+                for v in range(len(audit[i])):
+                    log.write(str(audit[i][v]))
+                    log.write("\n")
+        with open("balance.txt", "w") as f:
+            f.write(str(acc_val))
+        with open("stock_file.txt", "w") as f:
+            for i in range(len(stock)):
+                if stock[i][0] == None:
+                    break
+                for v in range(3):
+                    f.write(str(stock[i][v]))
+                    f.write("\n")
+                    print(stock[i][v])
         break

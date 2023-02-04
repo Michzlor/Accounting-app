@@ -1,0 +1,12 @@
+apple
+5
+134
+bannana
+4
+300
+orange
+10.0
+100
+peer
+2.0
+100
