@@ -1,12 +1,10 @@
 apple
 5
-134
+117
 bannana
 4
 300
-orange
-10.0
-100
-peer
-2.0
-100
+citrine
+11.0
+145
+
