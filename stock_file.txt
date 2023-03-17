@@ -1,8 +1,8 @@
 apple
-5
+5.0
 117
 bannana
-4
+4.0
 300
 citrine
 11.0
