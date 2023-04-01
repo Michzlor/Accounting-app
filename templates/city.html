@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{city}}</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+<body>
+<div class="columns">
+    <div class="column col-4 bg-secondary">
+        <div class = "hero bg-defult">
+        <form action="/" id="cityform" method="POST" class="form-group">
+            <label for="city" class="form-label text-center"><b>Choose a city:</b></label>
+            <select name="city" id="city" form="cityform" class="form-select bg-defult">
+                {% for city in city_list %}
+                <option value = "{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+            <input class="btn btn-primary input-group-btn btn-block" type="submit">
+        </form>
+
+        </div>
+    </div>
+
+    <div class="column col-8">
+        <div class="hero bg-dark text-center">
+        <h1>{{city}}</h1>
+            <h3>Top employers</h3>
+
+            <table class = "table">
+                <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Job Title</th>
+                    <th>Anuall Salary(₹)</th>
+                    <th>% of Salary to avarge</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in result[1]%}
+                        <tr>
+                        {% for k in range(4)%}
+                            <td>{{i[k]}}</td>
+                        {% endfor%}
+                        </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="container">
+    <div class="columns">
+        <div class="column col-4 text-center bg-secondary"><b>Avarge annual salary per positon</b></div>
+        <div class="column col-8 text-center bg-secondary"><b>Recomnded position in each company</b></div>
+    </div>
+    <div class="divider"></div>
+    <div class="columns">
+        <div class="column col-4">
+            <table class = "table table-striped">
+                   <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Anuall Salary(₹)</th>
+                </tr>
+                </thead>
+            {% for i in result[0]%}
+                <tr>
+                {% for k in range(3)%}
+                    <td>{{i[k]}}</td>
+                {% endfor%}
+                </tr>
+            {% endfor%}
+            </table>
+        </div>
+        <div class="column col-8">
+            <table class = "table table-striped">
+                 <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Job Title</th>
+                    <th>Anuall Salary(₹)</th>
+                </tr>
+                </thead>
+            {% for i in result[3]%}
+                <tr>
+                {% for k in range(3)%}
+                    <td>{{i[k]}}</td>
+                {% endfor%}
+                </tr>
+            {% endfor%}
+            </table>
+        </div>
+    </div>
+
+ </div>
+</body>
+</html>

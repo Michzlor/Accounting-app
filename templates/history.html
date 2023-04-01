@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Action history</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+<body>
+<div class="container" id="content-container">
+    <header class="navbar bg-secondary">
+        <section class="navbar-section">
+            <a href="/" class="btn  btn-block" role="button">Acounting dashboard</a>
+            <a href="/history/" class="btn btn-primary btn-block" role="button">Action history</a>
+
+        </section>
+        <section class="navbar-section">
+            <div class="chip bg-secondary text-center">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+
+                {% for message in messages %}
+                <h5 class="text-error">{{ message }}<a href="/" class="btn btn-clear" aria-label="Close"
+                                                       role="button"></a></h5>
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+    </header>
+</div>
+<h3 class="text-center">ACTION LIST</h3>
+<table class="table text-center" id="stock-table">
+    {% for i in audit%}
+    <tr>
+        <td>{{i}}</td>
+    </tr>
+    {%endfor%}
+</table>
+
+</body>
+</html>

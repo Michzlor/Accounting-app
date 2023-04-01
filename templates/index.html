@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Acounting dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+<body class="">
+
+
+<div class="container" id="content-container">
+    <header class="navbar bg-secondary">
+        <section class="navbar-section">
+            <a href="/" class="btn btn-primary btn-block" role="button">Acounting dashboard</a>
+            <a href="/history/" class="btn btn-block" role="button">Action history</a>
+
+        </section>
+        <section class="navbar-section">
+            <div class="chip bg-secondary text-center">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+
+                {% for message in messages %}
+                <h5 class="text-error">{{ message }}<a href="/" class="btn btn-clear" aria-label="Close"
+                                                       role="button"></a></h5>
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+    </header>
+    <div class="columns" id="account" style="min-height:200px">
+
+        <div class="column col-4 " id="change-balance">
+            <h3>CHANGE ACCOUNT BALANCE</h3>
+            <form action="/" id="balance" method="POST">
+                <label class="form-label" for="balance">Provide value to add to account(negative value to
+                    substract):</label>
+                <input class="form-input" type="number" name="balance" id="balance-input" form="balance"
+                       step="0.01"></input>
+                <input class="btn btn-primary btn-block" type="submit">
+            </form>
+
+        </div>
+        <div class="column col-8" id="view balance">
+            <div class="hero text-center "><h1>ACCOUNT BALANCE: {{acc_val}}$</h1></div>
+        </div>
+    </div>
+    <div class="columns" id="stock">
+        <div class="column col-3" id="stock-actions">
+            <div class="accordion" id="buy">
+                <input id="accordion1" type="radio" name="accordion-radio" hidden>
+                <label class="accordion-header c-hand" for="accordion1"><h3><i class="icon icon-arrow-right mr-1"></i>
+                    BUY</h3></label>
+                <div class="accordion-body">
+                    <form action="/" id="buy" method="POST">
+                        <div class="form-group">
+                            <label class="form-label" for="buy">Choose an item:</label>
+                            <input class="form-input" name="buy-item" type="text" list="items"/>
+                            <datalist id="items" name="buy-item">
+                                {% for item in item_list %}
+                                <option value="{{ item }}">{{ item }}</option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buy">Input number of items</label>
+                            <input class="form-input" name="buy-ammount" type="number" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buy">Input price</label>
+                            <input class="form-input" name="buy-price" type="number" min="0.01" step="0.01">
+                        </div>
+                        <input class="btn btn-primary btn-block" type="submit">
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="accordion" id="sell">
+                <input id="accordion2" type="radio" name="accordion-radio" hidden>
+                <label class="accordion-header c-hand" for="accordion2"><h3><i class="icon icon-arrow-right mr-1"></i>SELL
+                </h3></label>
+                <div class="accordion-body">
+
+                    <form action="/" id="sell" method="POST">
+                        <div class="form-group">
+                            <label class="form-label" for="sell">Choose an item:</label>
+                            <select class="form-input" name="sell-item" for="sell" id="items" style="min-width:30.3%">
+                                {% for item in item_list %}
+                                <option class="text-center" value="{{ item }}">{{ item }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="buy">Input number of items</label>
+                            <input class="form-input" name="sell-ammount" type="number" min="1">
+                        </div>
+                        <input class="btn btn-primary btn-block" type="submit"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="column col-1" id="separator"></div>
+        <div class="column col-7" id="stock-view">
+            <h3 class="text-center">ITEM LIST</h3>
+            <table class="table text-center" id="stock-table">
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Ammount in stock</th>
+                </tr>
+                {% for i in stock if i[0] != None%}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[2]}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+        <div class="column col-1" id="separator"></div>
+    </div>
+</div>
+</body>
+</html>
