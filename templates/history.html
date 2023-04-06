@@ -36,9 +36,14 @@
 </div>
 <h3 class="text-center">ACTION LIST</h3>
 <table class="table text-center" id="stock-table">
+    <tr>
+        <td>Action</td>
+        <td>Date</td>
+    </tr>
     {% for i in audit%}
     <tr>
-        <td>{{i}}</td>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}</td>
     </tr>
     {%endfor%}
 </table>

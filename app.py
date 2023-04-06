@@ -110,7 +110,30 @@ def save_audit_db(manager):
 
 
 item_list = []
+try:
+    with app.app_context():
+        val = db.session.query(Balance).first()
+        manager.acc_val = val.balance
+except Exception as err:
+    print(err)
+try:
 
+    with app.app_context():
+        val = db.session.query(Stock).all()
+        manager.stock = []
+        for line in val:
+            manager.stock.append((line.item, line.price, line.ammount))
+except Exception as err:
+    print(err)
+try:
+
+    with app.app_context():
+        val = db.session.query(Audit).all()
+        manager.audit_log = []
+        for line in val:
+            manager.audit_log.append((line.action, (line.date).strftime("%m/%d/%Y, %H:%M:%S")))
+except Exception as err:
+    print(err)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
