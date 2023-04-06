@@ -1,4 +1,5 @@
 from flask import flash
+from flask_sqlalchemy import SQLAlchemy
 
 
 class Manager:
@@ -7,8 +8,8 @@ class Manager:
         self.actions = {}
         with open("balance.txt", "r") as f:
             self.acc_val = float(f.readline())
+        self.stock = []
         with open("stock_file.txt", "r") as f:
-            self.stock = []
             read = f.readlines()
             for i in range(0, len(read), 3):
                 try:
@@ -17,8 +18,11 @@ class Manager:
                 except Exception as e:
                     print(e)
                     break
-        self.stock.append([None])
+            self.stock.append([None])
         self.audit_log = []
+        with open("log.txt", "r") as f:
+            for line in f.readlines():
+                self.audit_log.append(line)
 
     def assign(self, name):
         def decorate(cb):
@@ -90,6 +94,7 @@ def buy(manager, item, ammount, price):
             break
         elif manager.stock[idx][0] == item:
             manager.stock[idx][2] += ammount
+            manager.stock[idx][1] = price
             manager.acc_val -= price * ammount
             break
     sale = (f"Purchased {ammount} of {item} at price: {price}$")
@@ -173,7 +178,6 @@ def save_stock():
 
 def save_audit():
     with open("log.txt", "a") as log:
-        log.write("________\n")
         log.write(str(manager.audit_log[-1]))
         log.write("\n")
 
