@@ -78,7 +78,7 @@ def save_to_db(manager):
                 print(err)
                 stok = (Stock(item=thing[0], price=thing[1], ammount=thing[2]))
                 db.session.add(stok)
-        aud = Audit(action=manager.audit_log[-1], date=datetime.now())
+        aud = Audit(action=manager.audit_log[-1][0], date=datetime.now())
         db.session.add(aud)
         db.session.commit()
 
@@ -123,6 +123,7 @@ try:
         manager.stock = []
         for line in val:
             manager.stock.append((line.item, line.price, line.ammount))
+        manager.stock.insert(-1, [None])
 except Exception as err:
     print(err)
 try:
@@ -142,6 +143,7 @@ def index():
         if item[0] == None:
             break
         item_list.append(item[0])
+
     if request.method == 'POST':
         print(request.form)
         if request.form.get('balance') != '' and request.form.get('balance') != None:

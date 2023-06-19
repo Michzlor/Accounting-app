@@ -22,8 +22,8 @@
                 {% if messages %}
 
                 {% for message in messages %}
-                <h5 class="text-error">{{ message }}<a href="/" class="btn btn-clear" aria-label="Close"
-                                                       role="button"></a></h5>
+                <h1 class="text-error">{{ message }}<a href="/" class="btn btn-clear" aria-label="Close"
+                                                       role="button"></a></h1>
 
                 {% endfor %}
 
@@ -40,10 +40,13 @@
         <td>Action</td>
         <td>Date</td>
     </tr>
-    {% for i in audit%}
+    {% for action in audit%}
+
     <tr>
-        <td>{{i[0]}}</td>
-        <td>{{i[1]}}</td>
+        {% for i in action%}
+        <td>{{i}}</td>
+        {%endfor%}
+
     </tr>
     {%endfor%}
 </table>

@@ -1,5 +1,6 @@
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 class Manager:
@@ -18,7 +19,7 @@ class Manager:
                 except Exception as e:
                     print(e)
                     break
-            self.stock.append([None])
+        self.stock.append([None])
         self.audit_log = []
         with open("log.txt", "r") as f:
             for line in f.readlines():
@@ -38,7 +39,7 @@ class Manager:
 
 
 manager = Manager()
-
+manager.stock.append(None)
 
 @manager.assign("balance")
 def balance(manager, val):
@@ -89,15 +90,17 @@ def buy(manager, item, ammount, price):
             print("\n\nInsufficent funds")
             break
         elif manager.stock[idx][0] == None:
+            print("new item")
             manager.stock.insert(-1, [item, price, ammount])
             manager.acc_val -= price * ammount
             break
         elif manager.stock[idx][0] == item:
+            print("updating item")
             manager.stock[idx][2] += ammount
             manager.stock[idx][1] = price
             manager.acc_val -= price * ammount
             break
-    sale = (f"Purchased {ammount} of {item} at price: {price}$")
+    sale = ([f"Purchased {ammount} of {item} at price: {price}$", datetime.now().strftime('%m/%d/%Y, %H:%M:%S')])
     manager.audit_log.append(sale)
     save_account_balance()
     save_stock()
@@ -178,7 +181,7 @@ def save_stock():
 
 def save_audit():
     with open("log.txt", "a") as log:
-        log.write(str(manager.audit_log[-1]))
+        log.write(str(manager.audit_log[-1][0]))
         log.write("\n")
 
 # while True:
