@@ -13,6 +13,7 @@ and saves action history, account value and inventory to local database.
 #### Instalation with Git:
 In command line execute :
 >git clone https://github.com/Michzlor/Accounting-app.git
+
 It will create a directory named Accounting-app in your active directory(default: C/Users/username)
 ## 3.Start-up
 
